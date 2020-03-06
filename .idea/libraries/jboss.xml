@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jboss">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Downloads/jboss.jar" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$USER_HOME$/Downloads/jboss.jar" recursive="false" />
+  </library>
+</component>

@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="tess4j-3.4.8">
+  <library name="jul-to-slf4j-1.7.30">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Tess4J/dist/tess4j-3.4.8.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jul-to-slf4j-1.7.30.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
