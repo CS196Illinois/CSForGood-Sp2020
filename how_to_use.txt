@@ -1,0 +1,2 @@
+1.Place TestExample.jar and lib in the same directory.
+2.Run TestExample.jar
