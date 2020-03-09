@@ -1,10 +1,10 @@
 <component name="libraryTable">
   <library name="jboss-vfs-3.1.0.final">
     <CLASSES>
-      <root url="file://$USER_HOME$/Downloads/jboss-vfs-3.1.0.final.jar" />
+      <root url="file://$PROJECT_DIR$/Tess4J/lib/jboss-vfs-3.1.0.final.jar" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://$USER_HOME$/Downloads/jboss-vfs-3.1.0.final.jar" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/Tess4J/lib/jboss-vfs-3.1.0.final.jar" recursive="false" />
   </library>
 </component>
