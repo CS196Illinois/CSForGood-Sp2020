@@ -4,10 +4,10 @@ import java.io.File;
 
 public class TesseractExample {
     public static void main(String[] args) {
-        File imageFile = new File("C:\\Users\\isaac\\IdeaProjects\\CSForGood-Sp2020\\Tess4J\\test\\resources\\test-data\\eurotext_unlv.png");
+        File imageFile = new File("C:\\Users\\isaac\\IdeaProjects\\CSForGood-Sp2020\\Tess4J\\test\\resources\\test-data\\English\\Mobile_Photos\\IMG_0123.jpg");
         Tesseract instance = new Tesseract();
         instance.setDatapath("C:\\Users\\isaac\\IdeaProjects\\CSForGood-Sp2020\\Tess4J\\tessdata");
-        instance.setLanguage("eng");
+        //instance.setLanguage("deu");
 
         try {
             String result = instance.doOCR(imageFile);
