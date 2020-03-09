@@ -4,9 +4,9 @@ import java.io.File;
 
 public class TesseractExample {
     public static void main(String[] args) {
-        File imageFile = new File("C:\\Users\\isaac\\IdeaProjects\\CSForGood-Sp2020\\Tess4J\\test\\resources\\test-data\\English\\Mobile_Photos\\IMG_0123.jpg");
+        File imageFile = new File("/Users/Chirag/IdeaProjects/CSForGood-Sp2020/Tess4J/test/resources/test-data/ICR1.jpg");
         Tesseract instance = new Tesseract();
-        instance.setDatapath("C:\\Users\\isaac\\IdeaProjects\\CSForGood-Sp2020\\Tess4J\\tessdata");
+        instance.setDatapath("/Users/Chirag/IdeaProjects/CSForGood-Sp2020/Tess4J/tessdata");
         //instance.setLanguage("deu");
 
         try {
