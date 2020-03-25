@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="junit-4.12">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/junit-4.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Tess4J/lib/junit-4.12.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
