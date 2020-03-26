@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="ghost4j-1.0.0">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Tess4J/lib/ghost4j-1.0.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
