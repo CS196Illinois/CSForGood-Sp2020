@@ -8,11 +8,11 @@ export default function App() {
     </View>
   );
 }
-export default function respond() {
-    return <text>Response</text>;
-    //this function when called will just say respons the export default means we can use it throughout the app
-    // later use <text>good job on the {input char here} letter 
-}
+// export default function respond() {
+//     return <text>Response</text>;
+//     //this function when called will just say respons the export default means we can use it throughout the app
+//     // later use <text>good job on the {input char here} letter 
+// }
 
 const styles = StyleSheet.create({
   container: {

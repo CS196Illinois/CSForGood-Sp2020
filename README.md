@@ -9,3 +9,9 @@ Possible Tech Stacks:
 Java
 Tesseract
 Free TTS
+
+Front-end setup instructions:
+1) Clone the app
+2) cd into the app 
+3) Install all dependencies (npm i)
+4) start the app using 'expo start'
