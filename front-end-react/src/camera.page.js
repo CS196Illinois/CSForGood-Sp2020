@@ -6,8 +6,28 @@ import * as Permissions from 'expo-permissions';
 import styles from './styles';
 import Toolbar from './toolbar.component';
 import Gallery from './gallery.component';
+import ResultPage from './result.page';
 
+
+/*
+create the view style for button that you like (we did it in app)
+then put this code into the function to allow it to navigate to the results page
+
+<View style={styles.button}>
+  <Button
+    onPress={() => {
+      navigation.navigate('results')
+    }}
+    color="#841584"
+    title="Results"
+  />
+</View>
+
+*/
 export default class CameraPage extends React.Component {
+  constructor({navigation}) {
+    super()
+  }
     camera = null;
 
     state = {
