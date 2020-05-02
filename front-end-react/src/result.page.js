@@ -1,15 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 //import styles from './styles';
 
 
-export default function ResultPage({navigation}) {
+export default function ResultPage({ route, navigation}) {
+  const { picture } = route.params;
+  //const { pictureURI } = JSON.stringify(picture);
   return (
     <View style={styles.container}>
-      <View style={styles.title}>
-        <Text>Maybe show the photo?</Text>
+      <View style={styles.photo}>
+        <Text>picture: {JSON.stringify(picture)}</Text>
       </View>
       <View style={styles.result}>
           <Text>This would be the result</Text>
@@ -37,10 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'space-between',
   },
-  title: {
+  photo: {
     flex: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
   },
 });

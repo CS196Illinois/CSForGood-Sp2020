@@ -30,8 +30,6 @@ export default ({
                     />
                 </TouchableOpacity>
             </Col>
-            <Col style={styles.alignCenter}>
-            </Col>
             <Col size={2} style={styles.alignCenter}>
                 <TouchableWithoutFeedback
                     onPressIn={onCaptureIn}
@@ -53,15 +51,7 @@ export default ({
                     />
                 </TouchableOpacity>
             </Col>
-            <Col style={styles.alignCenter}>
-                <TouchableOpacity onPress={() => moveOn() }>
-                    <Ionicons
-                        name="ios-checkmark"
-                        color="white"
-                        size={60}
-                    />
-                </TouchableOpacity>
-            </Col>
+
         </Row>
     </Grid>
 );

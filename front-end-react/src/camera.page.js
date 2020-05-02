@@ -27,7 +27,7 @@ class CameraPageClass extends React.Component {
     camera = null;
 
     state = {
-      capture: [],
+      capture: null,
       //setting flash to be off by default
       flashMode: Camera.Constants.FlashMode.off,
       capturing: null,
@@ -42,7 +42,13 @@ class CameraPageClass extends React.Component {
 
     handleShortCapture = async () => {
       const photoData = await this.camera.takePictureAsync();
-      this.setState({ capturing: false, capture: [photoData] })
+      this.setState({ capturing: false, capture: photoData.uri })
+
+      const { navigation } = this.props;
+
+      navigation.navigate('results', {
+        picture: this.state.capture,
+      });
     };
 
     async componentDidMount() {
@@ -52,13 +58,8 @@ class CameraPageClass extends React.Component {
         this.setState({ hasCameraPermission });
     };
 
-    switchpage = () => {
-      const { navigation } = this.props;
-      navigation.navigate('results');
-    };
-
     render() {
-        const { hasCameraPermission, flashMode, cameraType, capturing, captures } = this.state;
+        const { hasCameraPermission, flashMode, cameraType, capturing, capture } = this.state;
         const { navigation } = this.props;
 
         if (hasCameraPermission === null) {
@@ -86,7 +87,6 @@ class CameraPageClass extends React.Component {
               setCameraType={this.setCameraType}
               onCaptureIn={this.handleCaptureIn}
               onShortCapture={this.handleShortCapture}
-              moveOn={this.switchpage}
             />
           </React.Fragment>
 
