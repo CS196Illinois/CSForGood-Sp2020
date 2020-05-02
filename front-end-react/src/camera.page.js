@@ -2,8 +2,9 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Button } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 
 import App from './..';
 
@@ -15,7 +16,13 @@ import ResultPage from './result.page';
 
 const { width: winWidth, height: winHeight } = Dimensions.get('window');
 
-export default class CameraPage extends React.Component {
+export default function(props) {
+  const navigation = useNavigation();
+
+  return <CameraPageClass {...props} navigation={navigation} />;
+}
+
+class CameraPageClass extends React.Component {
 
     camera = null;
 
@@ -46,6 +53,7 @@ export default class CameraPage extends React.Component {
     };
 
     switchpage = () => {
+      const { navigation } = this.props;
       navigation.navigate('results');
     };
 
