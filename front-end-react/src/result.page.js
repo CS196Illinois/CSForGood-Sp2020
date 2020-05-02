@@ -22,6 +22,10 @@ export default function ResultPage({ route, navigation}) {
         onChangeText={text => setString(text)}
         value={expectedString}
       />
+      <Image
+          style={{ width: 50, height: 50 }}
+          source={{ uri: picture.uri }}
+        />
       <View style={styles.photo}>
           <Text>picture: {JSON.stringify(picture.uri)}</Text>
       </View>
