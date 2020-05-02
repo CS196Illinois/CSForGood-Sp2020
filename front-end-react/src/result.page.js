@@ -3,34 +3,35 @@ import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import axios from 'axios';
 
-
-//import styles from './styles';
-
-
-export default function ResultPage({ route, navigation}) {
+export default function ResultPage({ route, navigation }) {
+  //receives picture from camera.page
   const { picture } = route.params;
+
+  //sets up info for backend
   const [expectedString,setString] = useState('');
 
   //send to back end
   //const res = await axios.post('enter-backend-url',{picture, expectedString});
 
-
+  //ask for text, display image, display result, display grade
   return (
     <View style={styles.container}>
-      <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={text => setString(text)}
-        value={expectedString}
-      />
-      <Image
-          style={{ width: 50, height: 50 }}
-          source={{ uri: picture.uri }}
+      <View style={styles.textbox}>
+        <Text>Enter what the image should say below:</Text>
+        <TextInput
+          style={{ height: 40, width: 350, borderColor: 'gray', borderWidth: 2 }}
+          onChangeText={text => setString(text)}
+          value={expectedString}
         />
+      </View>
       <View style={styles.photo}>
-          <Text>picture: {JSON.stringify(picture.uri)}</Text>
+        <Image
+            style={{ width: 200, height: 300 }}
+            source={{ uri: picture.uri }}
+          />
       </View>
       <View style={styles.result}>
-          <Text>This would be the result</Text>
+          <Text style={styles.resulttext}>This would be the result</Text>
       </View>
       <View style={styles.score}>
           <Text>This would say the score</Text>
@@ -44,20 +45,25 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff',
-  },
-  score: {
-    flex: 2,
-    justifyContent: 'flex-end',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
   },
-  result: {
-    flex: 2,
-    backgroundColor: '#fff',
-    justifyContent: 'space-between',
+  textbox: {
+    flex: 1,
   },
   photo: {
-    flex: 5,
-    width: 50,
-    height: 50,
+    flex: 4,
   },
+  result: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  score: {
+    flex: 1,
+  },
+  resulttext: {
+    fontSize: 20,
+    fontWeight: "bold"
+  },
+
 });

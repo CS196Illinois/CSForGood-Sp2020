@@ -9,6 +9,8 @@ import { View, TouchableWithoutFeedback, TouchableOpacity, StyleSheet, Dimension
 const { FlashMode: CameraFlashModes, Type: CameraTypes } = Camera.Constants;
 const { width: winWidth, height: winHeight } = Dimensions.get('window');
 
+//This makes the buttons at the bottom of camera.CameraPage
+//modified from tutorial
 
 export default ({
     capturing = false,
@@ -16,7 +18,7 @@ export default ({
     flashMode = CameraFlashModes.off,
     setFlashMode, setCameraType, moveOn,
     onCaptureIn, onCaptureOut, onLongCapture, onShortCapture,
-}) => (
+  }) => (
     <Grid style={styles.bottomToolbar}>
         <Row>
             <Col style={styles.alignCenter}>

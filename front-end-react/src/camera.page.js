@@ -5,17 +5,15 @@ import * as Permissions from 'expo-permissions';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-
-import App from './..';
-
-
-//import styles from './styles';
 import Toolbar from './toolbar.component';
-//import Gallery from './gallery.component';
 import ResultPage from './result.page';
 
 const { width: winWidth, height: winHeight } = Dimensions.get('window');
 
+//** modified the following tutorial:
+// "https://www.codementor.io/@foysalit/building-a-camera-app-with-react-native-r8up5685v"
+
+//funcion that calls CameraPageClass so that we could access navigation
 export default function(props) {
   const navigation = useNavigation();
 
@@ -27,30 +25,35 @@ class CameraPageClass extends React.Component {
     camera = null;
 
     state = {
+      //no picture saved initially
       capture: null,
       //setting flash to be off by default
       flashMode: Camera.Constants.FlashMode.off,
+      //not taking a photo initially
       capturing: null,
       //start the back camera by default
       cameraType: Camera.Constants.Type.back,
+      //camera permissions initialized to null
       hasCameraPermission: null,
     };
 
+    //these functions are all called when their respective buttons are pressed (see <Toolbar> below)
     setFlashMode = (flashMode) => this.setState({ flashMode });
     setCameraType = (cameraType) => this.setState({ cameraType });
     handleCaptureIn = () => this.setState({ capturing: true });
-
     handleShortCapture = async () => {
+      //saves photo data
       const photoData = await this.camera.takePictureAsync();
       this.setState({ capturing: false, capture: photoData })
 
       const { navigation } = this.props;
-
-      navigation.navigate('results', {
+      //navigates to the results
+      navigation.navigate('Results', {
         picture: this.state.capture,
       });
     };
 
+    //requests permissions from user
     async componentDidMount() {
         const camera = await Permissions.askAsync(Permissions.CAMERA);
         const hasCameraPermission = (camera.status === 'granted');
