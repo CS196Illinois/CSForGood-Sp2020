@@ -1,37 +1,26 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Button } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import styles from './styles';
+import App from './..';
+
+
+//import styles from './styles';
 import Toolbar from './toolbar.component';
-import Gallery from './gallery.component';
+//import Gallery from './gallery.component';
 import ResultPage from './result.page';
 
+const { width: winWidth, height: winHeight } = Dimensions.get('window');
 
-/*
-create the view style for button that you like (we did it in app)
-then put this code into the function to allow it to navigate to the results page
-
-<View style={styles.button}>
-  <Button
-    onPress={() => {
-      navigation.navigate('results')
-    }}
-    color="#841584"
-    title="Results"
-  />
-</View>
-
-*/
 export default class CameraPage extends React.Component {
-  constructor({navigation}) {
-    super()
-  }
+
     camera = null;
 
     state = {
-      captures: [],
+      capture: [],
       //setting flash to be off by default
       flashMode: Camera.Constants.FlashMode.off,
       capturing: null,
@@ -46,7 +35,7 @@ export default class CameraPage extends React.Component {
 
     handleShortCapture = async () => {
       const photoData = await this.camera.takePictureAsync();
-      this.setState({ capturing: false, captures: [photoData, ...this.state.captures] })
+      this.setState({ capturing: false, capture: [photoData] })
     };
 
     async componentDidMount() {
@@ -56,8 +45,13 @@ export default class CameraPage extends React.Component {
         this.setState({ hasCameraPermission });
     };
 
+    switchpage = () => {
+      navigation.navigate('results');
+    };
+
     render() {
         const { hasCameraPermission, flashMode, cameraType, capturing, captures } = this.state;
+        const { navigation } = this.props;
 
         if (hasCameraPermission === null) {
             return <View />;
@@ -76,8 +70,6 @@ export default class CameraPage extends React.Component {
                 />
             </View>
 
-            {captures.length > 0 && <Gallery captures={captures}/>}
-
             <Toolbar
               capturing={capturing}
               flashMode={flashMode}
@@ -86,8 +78,27 @@ export default class CameraPage extends React.Component {
               setCameraType={this.setCameraType}
               onCaptureIn={this.handleCaptureIn}
               onShortCapture={this.handleShortCapture}
+              moveOn={this.switchpage}
             />
           </React.Fragment>
+
         );
     };
 };
+
+const styles = StyleSheet.create({
+  preview: {
+        height: winHeight,
+        width: winWidth,
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+    },
+  button: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'space-between',
+  },
+});
