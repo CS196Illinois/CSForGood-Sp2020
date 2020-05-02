@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Button } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
+
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Toolbar from './toolbar.component';
@@ -16,8 +17,9 @@ const { width: winWidth, height: winHeight } = Dimensions.get('window');
 //funcion that calls CameraPageClass so that we could access navigation
 export default function(props) {
   const navigation = useNavigation();
+  const route = useRoute();
 
-  return <CameraPageClass {...props} navigation={navigation} />;
+  return <CameraPageClass {...props} navigation={navigation} route={route}/>;
 }
 
 class CameraPageClass extends React.Component {
@@ -47,9 +49,12 @@ class CameraPageClass extends React.Component {
       this.setState({ capturing: false, capture: photoData })
 
       const { navigation } = this.props;
+      const { route } = this.props;
+      const { textinfo } = route.params;
       //navigates to the results
       navigation.navigate('Results', {
         picture: this.state.capture,
+        expectedString: textinfo,
       });
     };
 

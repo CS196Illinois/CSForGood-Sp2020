@@ -6,24 +6,14 @@ import axios from 'axios';
 export default function ResultPage({ route, navigation }) {
   //receives picture from camera.page
   const { picture } = route.params;
-
-  //sets up info for backend
-  const [expectedString,setString] = useState('');
+  const { expectedString } = route.params;
 
   //send to back end
   //const res = await axios.post('enter-backend-url',{picture, expectedString});
 
-  //ask for text, display image, display result, display grade
+  //display image, display result, display grade
   return (
     <View style={styles.container}>
-      <View style={styles.textbox}>
-        <Text>Enter what the image should say below:</Text>
-        <TextInput
-          style={{ height: 40, width: 350, borderColor: 'gray', borderWidth: 2 }}
-          onChangeText={text => setString(text)}
-          value={expectedString}
-        />
-      </View>
       <View style={styles.photo}>
         <Image
             style={{ width: 200, height: 300 }}
@@ -48,11 +38,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
-  textbox: {
-    flex: 1,
-  },
   photo: {
     flex: 4,
+    justifyContent: 'space-around',
   },
   result: {
     flex: 1,

@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
-import React, { PureComponent } from 'react';
-import { AppRegistry, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import React, { PureComponent, useEffect, useState } from 'react';
+import { AppRegistry, StyleSheet, Text, TouchableOpacity, View, Button, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -29,6 +29,7 @@ export default function App() {
 // It will display some instructions on how to use the app and will have the camera button
 // the button will take you to the camera page.
 function Homescreen({ navigation }) {
+  const [expectedString,setString] = useState('');
    return (
      <View style={styles.container}>
            <View style={styles.title}>
@@ -36,19 +37,29 @@ function Homescreen({ navigation }) {
              <Text></Text>
              <Text></Text>
              <Text></Text>
-             <Text>Just press the camera button,</Text>
+             <Text>Just type in what your picture should say,</Text>
+             <Text></Text>
+             <Text>press the camera button,</Text>
              <Text></Text>
              <Text>take a picture of the text you want analyzed,</Text>
              <Text></Text>
-             <Text>type in what your picture should say,</Text>
-             <Text></Text>
              <Text>and the app will give you a grade!</Text>
+           </View>
+           <View style={styles.textbox}>
+             <Text>Enter what the image should say below:</Text>
+             <TextInput
+               style={{ height: 40, width: 300, borderColor: 'gray', borderWidth: 2 }}
+               onChangeText={text => setString(text)}
+               value={expectedString}
+             />
            </View>
            <View style={styles.bottom}>
              <View style={styles.button}>
                <Button
                  onPress={() => {
-                   navigation.navigate('cam')
+                   navigation.navigate('cam', {
+                     textinfo: expectedString,
+                   });
                  }}
                  color="#128dfe"
                  title="Camera"
@@ -64,33 +75,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'black',
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  capture: {
-    flex: 0,
     backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-    margin: 20,
+    justifyContent: 'space-between',
+
   },
   titletext: {
     fontSize: 20,
     fontWeight: "bold"
   },
+  textbox: {
+    flex: 2,
+    alignSelf: 'center'
+  },
   button: {
-    flex: 1,
+    flex: 3,
     backgroundColor: '#fff',
     justifyContent: 'space-between',
   },
   title: {
-    flex: 9,
+    flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
@@ -98,6 +101,5 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
 });
