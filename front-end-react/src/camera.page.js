@@ -42,7 +42,7 @@ class CameraPageClass extends React.Component {
 
     handleShortCapture = async () => {
       const photoData = await this.camera.takePictureAsync();
-      this.setState({ capturing: false, capture: photoData.uri })
+      this.setState({ capturing: false, capture: photoData })
 
       const { navigation } = this.props;
 

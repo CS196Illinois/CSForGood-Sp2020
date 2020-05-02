@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CameraPage from './src/camera.page';
 import ResultPage from './src/result.page';
 
-'use strict';
+//'use strict';
 
 const Stack = createStackNavigator();
 
