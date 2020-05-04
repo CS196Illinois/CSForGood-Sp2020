@@ -1,47 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import axios from 'axios';
 import * as ImageManipulator from "expo-image-manipulator";
 import { Asset } from "expo-asset";
+import axios from 'axios';
+import { RNS3 } from 'react-native-s3-upload';
 
 export default function ResultPage({ route, navigation }) {
   //receives picture from camera.page
-  const { picture } = route.params;
-  const { expectedString } = route.params;
+  const { picture, expectedString } = route.params;
 
-  const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState('');
+  const [result,setResult] = useState({similarity:0,text:''}); //state variable and function to call it is declared here using the the useState hook
 
-  useEffect(() => {
-    getFeedback();
+  useEffect(() => {   //useEffect hook is used here to make an API call as soon as this component mounts
+    getFeedback(); //function will upload image to AmazonS3, get a signed Url back and then send it to the backend for processing
   }, [])
-
+  
+  
+  
+  
   const getFeedback = async () => {
-    //send image to back end and receive feedback
 
-    // formData.append('file', { url: picture.uri.replace('file://', ''), name: 'image.jpg', type: 'image/jpeg' })
 
-    // console.log(formData);
-
+    //Since, the captured image is very large, the following code is used to compress the file
     const image = Asset.fromURI(picture.uri);
     await image.downloadAsync();
-    const compImage = await ImageManipulator.manipulateAsync(image.localUri || image.uri, [{resize:{width:100}}], {compress:0.2})
+    const compImage = await ImageManipulator.manipulateAsync(image.localUri || image.uri, [], { compress: 0 })
+    
+    const file = {                  // this is the file object to be uploaded to Amazon S3 bucket
+      uri: compImage.uri,
+      name: `image${Math.random()}.jpg`,
+      type: "image/jpg"
+    }
+    
+    // const options = { //the object here is used to set up Amazon S3. All details have been removed to ensure safety.
+    
+    // }
+    
+     
+    RNS3.put(file, options).then(response => {                //RNS3 package is used to get a public URL back for the backend to use
+      if (response.status !== 201)
+        throw new Error("Failed to upload image to S3");     //Standard Error Handling
 
-    var formdata = new FormData();
-    formdata.append('file', compImage);
 
+      axios.get(`http://09d98592.ngrok.io/ocr?url=${response.body.postResponse.location}&expect=${expectedString}`)  //Calls our API for OCR Processing
+        .then((res)=>{
+          setResult({similarity:res.data.similarity, text:res.data.text}) // we update state when we receive response
+        })
 
-    var requestOptions = {
-      method: 'POST',
-      body: formdata,
-      redirect: 'follow'
-    };
-
-    fetch("http://91e523a5.ngrok.io/ocr2?expect=test", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+    });
   }
 
 
@@ -50,15 +56,15 @@ export default function ResultPage({ route, navigation }) {
     <View style={styles.container}>
       <View style={styles.photo}>
         <Image
-          style={{ width: 200, height: 300 }}
-          source={{ uri: picture.uri }}
+          style={{ width: 100, height: 216 }}
+          source={picture}
         />
       </View>
       <View style={styles.result}>
-        <Text style={styles.resulttext}>Result = {feedback}</Text>
+        <Text style={styles.resulttext}>Result: {result.text}</Text>
       </View>
       <View style={styles.score}>
-        <Text>Score = {score}</Text>
+        <Text>Score = {result.similarity*100}%</Text>
       </View>
     </View>
   )
