@@ -18,7 +18,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Homescreen} />
-        <Stack.Screen name="cam" component={CameraPage} />
+        <Stack.Screen name="Camera" component={CameraPage} />
         <Stack.Screen name="Results" component={ResultPage} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -57,7 +57,7 @@ function Homescreen({ navigation }) {
              <View style={styles.button}>
                <Button
                  onPress={() => {
-                   navigation.navigate('cam', {
+                   navigation.navigate('Camera', {
                      textinfo: expectedString,
                    });
                  }}
