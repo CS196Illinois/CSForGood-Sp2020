@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AlexApps",
-    "slug": "AlexApps",
+    "name": "projectv4",
+    "slug": "vedo",
     "platforms": [
       "ios",
       "android",
@@ -22,12 +22,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "LearnReact"
-    },
-    "android": {
-      "package": "LearnReact"
-    },
-    "entryPoint": "node_modules/expo/AppEntry.js"
+      "supportsTablet": true
+    }
   }
 }
