@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
 import * as ImageManipulator from "expo-image-manipulator";
 import { Asset } from "expo-asset";
 import axios from 'axios';
 import { RNS3 } from 'react-native-s3-upload';
+import Loader from './Loader';
 
 export default function ResultPage({ route, navigation }) {
   //receives picture from camera.page
   const { picture, expectedString } = route.params;
 
-  const [result,setResult] = useState({similarity:0,text:''}); //state variable and function to call it is declared here using the the useState hook
+  const [result, setResult] = useState({ similarity: 0, text: '', loading: true }); //state variable and function to call it is declared here using the the useState hook
 
-  useEffect(() => {   //useEffect hook is used here to make an API call as soon as this component mounts
+  const ref = useRef();
+
+  useEffect(() => {   //useEffect hook is used here to make an API call as soon as this component mount
+
     getFeedback(); //function will upload image to AmazonS3, get a signed Url back and then send it to the backend for processing
   }, [])
-  
-  
-  
-  
+
+
+
+
   const getFeedback = async () => {
 
 
@@ -25,29 +29,37 @@ export default function ResultPage({ route, navigation }) {
     const image = Asset.fromURI(picture.uri);
     await image.downloadAsync();
     const compImage = await ImageManipulator.manipulateAsync(image.localUri || image.uri, [], { compress: 0 })
-    
+
     const file = {                  // this is the file object to be uploaded to Amazon S3 bucket
       uri: compImage.uri,
       name: `image${Math.random()}.jpg`,
       type: "image/jpg"
     }
-    
+
     // const options = { //the object here is used to set up Amazon S3. All details have been removed to ensure safety.
-    
+
     // }
+
     
-     
+
     RNS3.put(file, options).then(response => {                //RNS3 package is used to get a public URL back for the backend to use
       if (response.status !== 201)
         throw new Error("Failed to upload image to S3");     //Standard Error Handling
 
 
       axios.get(`http://09d98592.ngrok.io/ocr?url=${response.body.postResponse.location}&expect=${expectedString}`)  //Calls our API for OCR Processing
-        .then((res)=>{
-          setResult({similarity:res.data.similarity, text:res.data.text}) // we update state when we receive response
+        .then((res) => {
+          setResult({ similarity: res.data.similarity, text: res.data.text, loading: false }) // we update state when we receive response
         })
 
     });
+  }
+
+  if (result.loading) {
+    return (
+      <Loader/>
+      )
+
   }
 
 
@@ -56,7 +68,7 @@ export default function ResultPage({ route, navigation }) {
     <View style={styles.container}>
       <View style={styles.photo}>
         <Image
-          style={{ width: 100, height: 216 }}
+          style={{ width: 200, height: 400 }}
           source={picture}
         />
       </View>
@@ -64,7 +76,7 @@ export default function ResultPage({ route, navigation }) {
         <Text style={styles.resulttext}>Result: {result.text}</Text>
       </View>
       <View style={styles.score}>
-        <Text>Score = {result.similarity*100}%</Text>
+        <Text>Score = {result.similarity * 100}%</Text>
       </View>
     </View>
   )
